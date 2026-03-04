@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://knollmcb81.github.io/littlethings-site/sitemap.xml

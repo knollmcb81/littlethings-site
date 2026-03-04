@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Little Things — Capture the beautiful chaos of childhood</title>
+  <meta name="description" content="A keepsake journal for the beautiful chaos of childhood. Save the moments, milestones, and memories that matter — privately, on your device, no accounts required.">
+  <meta name="theme-color" content="#f5ebe0">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/app-icon.png">
+  <link rel="apple-touch-icon" href="images/app-icon.png">
+
+  <!-- Apple Smart App Banner (update app-id once approved) -->
+  <meta name="apple-itunes-app" content="app-id=0000000000">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Little Things — Capture the beautiful chaos of childhood">
+  <meta property="og:description" content="A keepsake journal for the beautiful chaos of childhood — the adventures, the phases, the little things worth saving. Private by design.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/og-image.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset & Base ──────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #faf6f0;
+      --warm-bg: #f5ebe0;
+      --paper: #fdf8f2;
+      --text: #3d3229;
+      --text-soft: #6b5e52;
+      --accent: #c4956a;
+      --accent-soft: #d4a97a;
+      --pink: #e8c4c4;
+      --pink-deep: #c9908f;
+      --blue: #b8ccd8;
+      --lavender: #c5b8d4;
+      --green: #b8ccb0;
+      --shadow: rgba(60, 40, 20, 0.08);
+      --shadow-md: rgba(60, 40, 20, 0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      line-height: 1.2;
+    }
+
+    /* ── Paper texture overlay ────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(200,160,120,0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(180,140,100,0.03) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(160,130,110,0.03) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Layout ───────────────────────────────────────── */
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      padding: 80px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Hero ─────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 0 80px;
+      background:
+        radial-gradient(ellipse at 30% 0%, rgba(232,196,196,0.2) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 100%, rgba(196,149,106,0.15) 0%, transparent 50%),
+        var(--cream);
+    }
+
+    .hero-content {
+      max-width: 720px;
+    }
+
+    .hero-icon {
+      width: 120px;
+      height: 120px;
+      border-radius: 28px;
+      box-shadow: 0 8px 32px var(--shadow-md), 0 2px 8px var(--shadow);
+      margin-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+      color: var(--text-soft);
+      max-width: 540px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .app-store-badge {
+      display: inline-block;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .app-store-badge:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+    .app-store-badge img {
+      height: 54px;
+    }
+
+    .hero-scroll-hint {
+      margin-top: 60px;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      opacity: 0.5;
+      animation: gentle-bounce 3s ease-in-out infinite;
+    }
+    @keyframes gentle-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    /* ── Screenshots ─────────────────────────────────── */
+    .screenshots {
+      padding: 40px 0 80px;
+      overflow: hidden;
+    }
+
+    .screenshots-track {
+      display: flex;
+      gap: 24px;
+      justify-content: flex-start;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 20px 24px 12px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent) transparent;
+    }
+    .screenshots-track::-webkit-scrollbar { height: 6px; }
+    .screenshots-track::-webkit-scrollbar-track { background: transparent; }
+    .screenshots-track::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+    .screenshot-frame {
+      flex: 0 0 auto;
+      width: 220px;
+      scroll-snap-align: center;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px var(--shadow-md), 0 4px 12px var(--shadow);
+      background: #000;
+      transition: transform 0.3s ease;
+    }
+    .screenshot-frame:hover { transform: translateY(-4px); }
+    .screenshot-frame img {
+      width: 100%;
+      display: block;
+    }
+
+    /* ── Tagline banner ──────────────────────────────── */
+    .tagline {
+      text-align: center;
+      padding: 60px 0;
+      background: var(--warm-bg);
+    }
+
+    .tagline blockquote {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-style: italic;
+      color: var(--text);
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .tagline blockquote footer {
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      margin-top: 16px;
+    }
+
+    /* ── Features ─────────────────────────────────────── */
+    .features {
+      background: var(--cream);
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      margin-bottom: 60px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+    }
+
+    .feature-card {
+      background: var(--paper);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 4px 20px var(--shadow);
+      border: 1px solid rgba(200, 180, 160, 0.2);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px var(--shadow-md);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    .fi-capture  { background: var(--pink); }
+    .fi-organize { background: var(--blue); }
+    .fi-write    { background: var(--lavender); }
+    .fi-collect  { background: var(--green); }
+    .fi-theme    { background: rgba(196,149,106,0.25); }
+    .fi-search   { background: rgba(184,204,216,0.4); }
+
+    /* ── How It Works ────────────────────────────────── */
+    .how-it-works {
+      background: var(--warm-bg);
+    }
+
+    .how-it-works h2 {
+      text-align: center;
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      margin-bottom: 60px;
+    }
+
+    .steps {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .step {
+      text-align: center;
+      flex: 1;
+      min-width: 200px;
+      max-width: 280px;
+    }
+
+    .step-number {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 2px solid var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin: 0 auto 20px;
+    }
+
+    .step h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      color: var(--text-soft);
+      font-size: 0.93rem;
+      line-height: 1.6;
+    }
+
+    /* ── Page Types ───────────────────────────────────── */
+    .page-types {
+      background: var(--cream);
+    }
+
+    .page-types h2 {
+      text-align: center;
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      margin-bottom: 16px;
+    }
+
+    .page-types-subtitle {
+      text-align: center;
+      color: var(--text-soft);
+      font-size: 1.05rem;
+      margin-bottom: 52px;
+    }
+
+    .page-type-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+    }
+
+    .page-type-card {
+      background: var(--paper);
+      border-radius: 20px;
+      padding: 40px 32px;
+      text-align: center;
+      box-shadow: 0 4px 20px var(--shadow);
+      border: 1px solid rgba(200, 180, 160, 0.2);
+    }
+
+    .page-type-emoji {
+      font-size: 40px;
+      margin-bottom: 16px;
+    }
+
+    .page-type-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+    }
+
+    .page-type-card p {
+      color: var(--text-soft);
+      font-size: 0.93rem;
+      line-height: 1.6;
+    }
+
+    /* ── Privacy ──────────────────────────────────────── */
+    .privacy {
+      background: var(--warm-bg);
+    }
+
+    .privacy-content {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .privacy-text {
+      flex: 1;
+    }
+
+    .privacy-text h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      margin-bottom: 20px;
+    }
+
+    .privacy-text p {
+      color: var(--text-soft);
+      font-size: 1.02rem;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .privacy-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .privacy-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--paper);
+      padding: 10px 18px;
+      border-radius: 100px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text);
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    .privacy-shield {
+      flex: 0 0 auto;
+      font-size: 120px;
+      opacity: 0.8;
+    }
+
+    /* ── Closing CTA ─────────────────────────────────── */
+    .closing {
+      text-align: center;
+      padding: 100px 0;
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(196,149,106,0.1) 0%, transparent 60%),
+        var(--cream);
+    }
+
+    .closing h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      margin-bottom: 16px;
+    }
+
+    .closing h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .closing p {
+      color: var(--text-soft);
+      font-size: 1.1rem;
+      margin-bottom: 36px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── Footer ───────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      background: var(--warm-bg);
+      border-top: 1px solid rgba(200, 180, 160, 0.25);
+      position: relative;
+      z-index: 1;
+    }
+
+    footer p {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 768px) {
+      section { padding: 60px 0; }
+
+      .hero { min-height: auto; padding: 100px 0 60px; }
+      .hero-icon { width: 96px; height: 96px; border-radius: 22px; }
+
+      .screenshot-frame { width: 180px; }
+
+      .privacy-content { flex-direction: column; text-align: center; gap: 32px; }
+      .privacy-badges { justify-content: center; }
+      .privacy-shield { font-size: 80px; order: -1; }
+
+      .steps { gap: 32px; }
+
+      .closing { padding: 72px 0; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .screenshot-frame { width: 160px; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .page-type-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Hero ────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container hero-content">
+      <img src="images/app-icon.png" alt="Little Things app icon" class="hero-icon">
+      <h1>Childhood is <em>chaos</em>.<br>The beautiful kind.</h1>
+      <p class="hero-subtitle">
+        The crayon scribbles on the counter. The lopsided rainbow. The phase where everything had to be purple. Little Things captures it all before it slips away.
+      </p>
+      <a href="https://apps.apple.com/app/little-things/id0000000000" class="app-store-badge" aria-label="Download on the App Store">
+        <img src="images/app-store-badge.svg" alt="Download on the App Store">
+      </a>
+      <div class="hero-scroll-hint" aria-hidden="true">&#8595;</div>
+    </div>
+  </section>
+
+  <!-- ── Screenshots ─────────────────────────────────── -->
+  <section class="screenshots">
+    <div class="screenshots-track">
+      <div class="screenshot-frame"><img src="images/screenshot-1.png" alt="Home screen with child journals and scattered photos" loading="lazy"></div>
+      <div class="screenshot-frame"><img src="images/screenshot-2.png" alt="Addie's seasonal timeline with pink theme" loading="lazy"></div>
+      <div class="screenshot-frame"><img src="images/screenshot-3.png" alt="Heartfelt letter from Dad to Oliver" loading="lazy"></div>
+      <div class="screenshot-frame"><img src="images/screenshot-4.png" alt="Skiing scrapbook page with photo collage" loading="lazy"></div>
+      <div class="screenshot-frame"><img src="images/screenshot-5.png" alt="Boy and dog moment page" loading="lazy"></div>
+    </div>
+  </section>
+
+  <!-- ── Tagline ─────────────────────────────────────── -->
+  <section class="tagline">
+    <div class="container">
+      <blockquote>
+        "Twenty years from now, you'll be glad you saved the duck."
+        <footer>It's never just a little thing.</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ── How It Works ────────────────────────────────── -->
+  <section class="how-it-works">
+    <div class="container">
+      <h2>Simple by design</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Photograph</h3>
+          <p>Snap a picture — a drawing on the fridge, a day at the park, a face you don't want to forget</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Add a note</h3>
+          <p>Write what they said about it, what phase they're in, or why it matters</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Look back</h3>
+          <p>Browse by season and year — like flipping through a family keepsake</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Features ────────────────────────────────────── -->
+  <section class="features">
+    <div class="container">
+      <h2>Capture the chaos, keep what matters</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon fi-capture">&#x1f4f7;</div>
+          <h3>Capture &amp; Clean Up</h3>
+          <p>Save a photo and use built-in tools to crop, adjust brightness, and make the colors pop.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon fi-organize">&#x1f4c5;</div>
+          <h3>Organized by Season</h3>
+          <p>All the chaos, sorted by year and season. Flip back through Summer 2024 or find that snowman from last winter.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon fi-write">&#x270d;&#xfe0f;</div>
+          <h3>Write It Down</h3>
+          <p>Add headers, captions, and dates. Record what was happening, what phase they were in — these details fade fast.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon fi-collect">&#x1f5bc;&#xfe0f;</div>
+          <h3>The Chaos Layout</h3>
+          <p>Scatter photos from a big day across the page — drag, resize, rotate. Controlled chaos, just messy enough to feel real.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon fi-theme">&#x1f3a8;</div>
+          <h3>Beautifully Themed</h3>
+          <p>Choose from Soft, Classic, and Modern templates with six color tones. Each child's journal gets its own look.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon fi-search">&#x1f50d;</div>
+          <h3>Search &amp; Find</h3>
+          <p>Search by season, month, year, or keyword. Find "birthday" or everything from "Fall 2025" instantly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Page Types ──────────────────────────────────── -->
+  <section class="page-types">
+    <div class="container">
+      <h2>Three ways to save a memory</h2>
+      <p class="page-types-subtitle">Every moment deserves its own kind of page</p>
+      <div class="page-type-cards">
+        <div class="page-type-card">
+          <div class="page-type-emoji">&#x1f308;</div>
+          <h3>Moments</h3>
+          <p>A single photo — a drawing, a smile, a Saturday morning — on beautiful paper with a caption and date.</p>
+        </div>
+        <div class="page-type-card">
+          <div class="page-type-emoji">&#x1f4dd;</div>
+          <h3>Letters</h3>
+          <p>Write to your child — or let them leave one for you. Handwritten-style font on textured paper for thoughts, milestones, or messages for the future.</p>
+        </div>
+        <div class="page-type-card">
+          <div class="page-type-emoji">&#x1f4f8;</div>
+          <h3>Collections</h3>
+          <p>The chaos layout — drop multiple photos on a page and scatter them like you would on a real table or on the fridge. Drag, resize, rotate until it feels right.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Privacy ─────────────────────────────────────── -->
+  <section class="privacy">
+    <div class="container">
+      <div class="privacy-content">
+        <div class="privacy-text">
+          <h2>Private by design</h2>
+          <p>
+            Your family's memories belong to you — not a server, not an algorithm, not an ad network.
+          </p>
+          <p>
+            Little Things stores everything on your device by default. No accounts, no analytics, no ads, no tracking. Want a backup? You can optionally sync to your own iCloud — your data stays in your hands either way.
+          </p>
+          <div class="privacy-badges">
+            <span class="privacy-badge">&#x1f6ab; No ads</span>
+            <span class="privacy-badge">&#x1f512; No accounts</span>
+            <span class="privacy-badge">&#x1f6e1;&#xfe0f; No tracking</span>
+            <span class="privacy-badge">&#x2601;&#xfe0f; Optional iCloud backup</span>
+          </div>
+        </div>
+        <div class="privacy-shield" aria-hidden="true">&#x1f512;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Closing CTA ─────────────────────────────────── -->
+  <section class="closing">
+    <div class="container">
+      <h2>Embrace the <em>chaos</em>.<br>Save the <em>little things</em>.</h2>
+      <p>Free to download. Start capturing the beautiful mess today.</p>
+      <a href="https://apps.apple.com/app/little-things/id0000000000" class="app-store-badge" aria-label="Download on the App Store">
+        <img src="images/app-store-badge.svg" alt="Download on the App Store">
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Footer ──────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Little Things &middot; <a href="https://gist.github.com/knollmcb81/d3b5fb77d2e6e3852d4e153f4c470466">Privacy Policy</a> &middot; <a href="https://gist.github.com/knollmcb81/d7dcae047b89368766d6ea2fc514d2d8">Support</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>
